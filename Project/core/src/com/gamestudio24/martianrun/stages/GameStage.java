@@ -48,6 +48,8 @@ public class GameStage extends Stage implements ContactListener {
     private MusicButton musicButton;
     private PauseButton pauseButton;
     private MoveButton moveButton;
+    private MokhZaniButton mokhZaniButton;
+    private JarZaniButton jarZaniButton;
     private StartButton startButton;
     private AboutButton aboutButton;
     private ShareButton shareButton;
@@ -145,18 +147,34 @@ public class GameStage extends Stage implements ContactListener {
 
     private void setUpPause() {
         Rectangle pauseButtonBounds = new Rectangle(getCamera().viewportWidth * 15 / 16,
-                getCamera().viewportHeight * 7 / 8, getCamera().viewportHeight / 10,
-                getCamera().viewportHeight / 10);
+                getCamera().viewportHeight * 7 / 8, getCamera().viewportHeight / 15,
+                getCamera().viewportHeight / 15);
         pauseButton = new PauseButton(pauseButtonBounds, new GamePauseButtonListener());
         addActor(pauseButton);
     }
 
     private void setUpMoveButton() {
-        Rectangle moveButtonBounds = new Rectangle(getCamera().viewportWidth * 15 / 16,
-                getCamera().viewportHeight * 1 / 20, getCamera().viewportHeight / 10,
-                getCamera().viewportHeight / 10);
+        Rectangle moveButtonBounds = new Rectangle(getCamera().viewportWidth * 14 / 16,
+                getCamera().viewportHeight * 1 / 25, getCamera().viewportHeight * 3 / 16,
+                getCamera().viewportHeight / 16);
         moveButton = new MoveButton(moveButtonBounds, new GameMoveButtonListener());
         addActor(moveButton);
+    }
+
+    private void setUpMokhZaniButton() {
+        Rectangle buttonBounds = new Rectangle((getCamera().viewportWidth * 14 / 16) - (getCamera().viewportHeight * 3 / 16),
+                getCamera().viewportHeight * 1 / 25, getCamera().viewportHeight * 3 / 16,
+                getCamera().viewportHeight / 16);
+        mokhZaniButton = new MokhZaniButton(buttonBounds, new GameMokhZaniButtonListener());
+        addActor(mokhZaniButton);
+    }
+
+    private void setUpJarZaniButton() {
+        Rectangle buttonBounds = new Rectangle((getCamera().viewportWidth * 1 / 32),
+                getCamera().viewportHeight * 1 / 25, getCamera().viewportHeight * 3 / 16,
+                getCamera().viewportHeight / 16);
+        jarZaniButton = new JarZaniButton(buttonBounds, new GameJarZaniButtonListener());
+        addActor(jarZaniButton);
     }
 
     /**
@@ -464,6 +482,28 @@ public class GameStage extends Stage implements ContactListener {
         }
     }
 
+    private class GameMokhZaniButtonListener implements MokhZaniButton.MokhZaniButtonListener {
+
+        @Override
+        public void onMove() {
+        }
+
+        @Override
+        public void onStop() {
+        }
+    }
+
+    private class GameJarZaniButtonListener implements JarZaniButton.JarZaniButtonListener {
+
+        @Override
+        public void onMove() {
+        }
+
+        @Override
+        public void onStop() {
+        }
+    }
+
     private class GameStartButtonListener implements StartButton.StartButtonListener {
 
         @Override
@@ -473,6 +513,8 @@ public class GameStage extends Stage implements ContactListener {
             setUpCharacters();
             setUpPause();
             setUpMoveButton();
+            setUpMokhZaniButton();
+            setUpJarZaniButton();
             setUpTutorial();
             onGameResumed();
         }

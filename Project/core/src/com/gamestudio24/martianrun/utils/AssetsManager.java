@@ -31,9 +31,24 @@ public class AssetsManager {
     private static HashMap<String, TextureRegion> texturesMap = new HashMap<String, TextureRegion>();
     private static HashMap<String, Animation> animationsMap = new HashMap<String, Animation>();
     private static TextureAtlas textureAtlas;
+    private static TextureAtlas customAtlas;
     private static BitmapFont smallFont;
     private static BitmapFont smallestFont;
     private static BitmapFont largeFont;
+
+    /**
+     * @return the customAtlas
+     */
+    public static TextureAtlas getCustomAtlas() {
+        return customAtlas;
+    }
+
+    /**
+     * @param aCustomAtlas the customAtlas to set
+     */
+    public static void setCustomAtlas(TextureAtlas aCustomAtlas) {
+        customAtlas = aCustomAtlas;
+    }
 
     private AssetsManager() {
 
@@ -50,7 +65,8 @@ public class AssetsManager {
                 new TextureRegion(new Texture(Gdx.files.internal(Constants.GROUND_IMAGE_PATH))));
 
         textureAtlas = new TextureAtlas(Constants.SPRITES_ATLAS_PATH);
-
+        setCustomAtlas(new TextureAtlas(Constants.CUSTOM_ATLAS_PATH));
+        
         // Runner
         texturesMap.put(Constants.RUNNER_JUMPING_ASSETS_ID,
                 textureAtlas.findRegion(Constants.RUNNER_JUMPING_REGION_NAME));

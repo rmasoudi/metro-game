@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.gamestudio24.martianrun.utils;
 
 import com.badlogic.gdx.math.Vector2;
@@ -31,7 +30,7 @@ public class Constants {
     public static final float GROUND_X = 0;
     public static final float GROUND_Y = 0;
     public static final float GROUND_WIDTH = 25f;
-    public static final float GROUND_HEIGHT = 2f;
+    public static final float GROUND_HEIGHT = 3f;
     public static final float GROUND_DENSITY = 0f;
 
     public static final float RUNNER_X = 2;
@@ -64,21 +63,26 @@ public class Constants {
     public static final String RUNNING_WIDE_ENEMY_ASSETS_ID = "running_wide_enemy";
     public static final String FLYING_SMALL_ENEMY_ASSETS_ID = "flying_small_enemy";
     public static final String FLYING_WIDE_ENEMY_ASSETS_ID = "flying_wide_enemy";
+    public static final String MOVE_BUTTUN_ASSET_ID = "move";
+    public static final String JAR_ZANI_BUTTUN_ASSET_ID = "jar_zani";
+    public static final String MOKH_ZANI_BUTTUN_ASSET_ID = "mokh_zani";
+    
 
     public static final String BACKGROUND_IMAGE_PATH = "metro_background.png";
     public static final String GROUND_IMAGE_PATH = "ground.png";
     public static final String SPRITES_ATLAS_PATH = "sprites.txt";
-    public static final String[] RUNNER_RUNNING_REGION_NAMES = new String[] {"alienBeige_run1", "alienBeige_run2"};
+    public static final String CUSTOM_ATLAS_PATH = "atlas.atlas";
+    public static final String[] RUNNER_RUNNING_REGION_NAMES = new String[]{"alienBeige_run1", "alienBeige_run2"};
     public static final String RUNNER_DODGING_REGION_NAME = "alienBeige_dodge";
     public static final String RUNNER_HIT_REGION_NAME = "alienBeige_hit";
     public static final String RUNNER_JUMPING_REGION_NAME = "alienBeige_jump";
 
-    public static final String[] RUNNING_SMALL_ENEMY_REGION_NAMES = new String[] {"ladyBug_walk1", "ladyBug_walk2"};
-    public static final String[] RUNNING_LONG_ENEMY_REGION_NAMES = new String[] {"barnacle_bite1", "barnacle_bite2"};
-    public static final String[] RUNNING_BIG_ENEMY_REGION_NAMES = new String[] {"spider_walk1", "spider_walk2"};
-    public static final String[] RUNNING_WIDE_ENEMY_REGION_NAMES = new String[] {"worm_walk1", "worm_walk2"};
-    public static final String[] FLYING_SMALL_ENEMY_REGION_NAMES = new String[] {"bee_fly1", "bee_fly2"};
-    public static final String[] FLYING_WIDE_ENEMY_REGION_NAMES = new String[] {"fly_fly1", "fly_fly2"};
+    public static final String[] RUNNING_SMALL_ENEMY_REGION_NAMES = new String[]{"ladyBug_walk1", "ladyBug_walk2"};
+    public static final String[] RUNNING_LONG_ENEMY_REGION_NAMES = new String[]{"barnacle_bite1", "barnacle_bite2"};
+    public static final String[] RUNNING_BIG_ENEMY_REGION_NAMES = new String[]{"spider_walk1", "spider_walk2"};
+    public static final String[] RUNNING_WIDE_ENEMY_REGION_NAMES = new String[]{"worm_walk1", "worm_walk2"};
+    public static final String[] FLYING_SMALL_ENEMY_REGION_NAMES = new String[]{"bee_fly1", "bee_fly2"};
+    public static final String[] FLYING_WIDE_ENEMY_REGION_NAMES = new String[]{"fly_fly1", "fly_fly2"};
 
     public static final String SOUND_ON_REGION_NAME = "sound_on";
     public static final String SOUND_OFF_REGION_NAME = "sound_off";
@@ -104,8 +108,8 @@ public class Constants {
 
     public static final String FONT_NAME = "roboto_bold.ttf";
 
-    public static final String ABOUT_TEXT = "Developed by: @gamestudio24\nPowered by: " +
-            "@libgdx\nGraphics: @kenneywings\nMusic: @kmacleod";
+    public static final String ABOUT_TEXT = "Developed by: @gamestudio24\nPowered by: "
+            + "@libgdx\nGraphics: @kenneywings\nMusic: @kmacleod";
     public static final String SHARE_MESSAGE_PREFIX = "Check out " + GAME_NAME + " %s";
     public static final String SHARE_TITLE = "Share!";
     public static final String PAUSED_LABEL = "Paused";

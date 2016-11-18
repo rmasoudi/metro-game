@@ -20,25 +20,25 @@ import com.gamestudio24.martianrun.enums.GameState;
 import com.gamestudio24.martianrun.utils.Constants;
 import com.gamestudio24.martianrun.utils.GameManager;
 
-public class MoveButton extends GameButton {
+public class JarZaniButton extends GameButton {
 
-    public interface MoveButtonListener {
+    public interface JarZaniButtonListener {
 
         public void onMove();
 
         public void onStop();
     }
 
-    private MoveButtonListener listener;
+    private JarZaniButtonListener listener;
 
-    public MoveButton(Rectangle bounds, MoveButtonListener listener) {
+    public JarZaniButton(Rectangle bounds, JarZaniButtonListener listener) {
         super(bounds);
         this.listener = listener;
     }
 
     @Override
     protected String getRegionName() {
-        return Constants.MOVE_BUTTUN_ASSET_ID;
+        return Constants.JAR_ZANI_BUTTUN_ASSET_ID;
     }
 
     @Override

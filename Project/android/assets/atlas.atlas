@@ -1,0 +1,27 @@
+
+atlas.png
+size: 512,64
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+jar_zani
+  rotate: false
+  xy: 2, 2
+  size: 120, 40
+  orig: 120, 40
+  offset: 0, 0
+  index: -1
+mokh_zani
+  rotate: false
+  xy: 124, 2
+  size: 120, 40
+  orig: 120, 40
+  offset: 0, 0
+  index: -1
+move
+  rotate: false
+  xy: 246, 2
+  size: 120, 40
+  orig: 120, 40
+  offset: 0, 0
+  index: -1
