@@ -52,11 +52,11 @@ public class Score extends Actor {
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
-        super.draw(batch, parentAlpha);
+        /*super.draw(batch, parentAlpha);
         if (getScore() == 0) {
             return;
         }
-        font.draw(batch, String.format("%d", getScore()), bounds.x, bounds.y, bounds.width, Align.right,true);
+        font.draw(batch, String.format("%d", getScore()), bounds.x, bounds.y, bounds.width, Align.right,true);*/
     }
 
     public int getScore() {

@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.gamestudio24.martianrun.actors;
 
 import com.badlogic.gdx.Gdx;
@@ -21,6 +20,7 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.gamestudio24.martianrun.box2d.RunnerUserData;
 import com.gamestudio24.martianrun.enums.Difficulty;
@@ -35,6 +35,7 @@ public class Runner extends GameActor {
     private boolean dodging;
     private boolean jumping;
     private boolean hit;
+    private boolean running = false;
     private Animation runningAnimation;
     private TextureRegion jumpingTexture;
     private TextureRegion dodgingTexture;
@@ -74,12 +75,14 @@ public class Runner extends GameActor {
                     1f, (float) Math.toDegrees(body.getAngle()));
         } else if (jumping) {
             batch.draw(jumpingTexture, x, y, width, screenRectangle.height);
-        } else {
+        } else if (running) {
             // Running
             if (GameManager.getInstance().getGameState() == GameState.RUNNING) {
                 stateTime += Gdx.graphics.getDeltaTime();
             }
             batch.draw(runningAnimation.getKeyFrame(stateTime, true), x, y, width, screenRectangle.height);
+        } else {
+            batch.draw(runningAnimation.getKeyFrame(0, false), x, y, width, screenRectangle.height);
         }
     }
 
@@ -144,5 +147,22 @@ public class Runner extends GameActor {
 
     public int getJumpCount() {
         return jumpCount;
+    }
+
+    /**
+     * @return the running
+     */
+    public boolean isRunning() {
+        return running;
+    }
+
+    /**
+     * @param running the running to set
+     */
+    public void setRunning(boolean running) {
+        this.running = running;
+    }
+
+    public void moveUp() {
     }
 }

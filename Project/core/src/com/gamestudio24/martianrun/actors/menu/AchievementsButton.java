@@ -21,6 +21,10 @@ import com.gamestudio24.martianrun.utils.Constants;
 
 public class AchievementsButton extends GameButton {
 
+    @Override
+    public void unTouched() {
+    }
+
     public interface AchievementsButtonListener {
         public void onAchievements();
     }

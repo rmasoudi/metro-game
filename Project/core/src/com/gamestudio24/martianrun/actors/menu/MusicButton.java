@@ -37,4 +37,8 @@ public class MusicButton extends GameButton {
         AudioUtils.getInstance().playMusic();
     }
 
+    @Override
+    public void unTouched() {
+    }
+
 }

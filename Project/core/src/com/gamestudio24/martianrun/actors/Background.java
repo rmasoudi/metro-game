@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.gamestudio24.martianrun.actors;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -31,6 +30,7 @@ public class Background extends Actor {
     private Rectangle textureRegionBounds1;
     private Rectangle textureRegionBounds2;
     private int speed = 100;
+    private boolean moving = false;
 
     public Background() {
         textureRegion = AssetsManager.getTextureRegion(Constants.BACKGROUND_ASSETS_ID);
@@ -42,6 +42,9 @@ public class Background extends Actor {
     public void act(float delta) {
 
         if (GameManager.getInstance().getGameState() != GameState.RUNNING) {
+            return;
+        }
+        if (!isMoving()) {
             return;
         }
 
@@ -73,6 +76,20 @@ public class Background extends Actor {
     private void resetBounds() {
         textureRegionBounds1 = textureRegionBounds2;
         textureRegionBounds2 = new Rectangle(Constants.APP_WIDTH, 0, Constants.APP_WIDTH, Constants.APP_HEIGHT);
+    }
+
+    /**
+     * @return the moving
+     */
+    public boolean isMoving() {
+        return moving;
+    }
+
+    /**
+     * @param moving the moving to set
+     */
+    public void setMoving(boolean moving) {
+        this.moving = moving;
     }
 
 }

@@ -44,6 +44,11 @@ public abstract class GameButton extends Button {
                 loadTextureRegion();
                 return true;
             }
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                unTouched();
+                loadTextureRegion();
+            }
         });
     }
 
@@ -56,6 +61,7 @@ public abstract class GameButton extends Button {
     protected abstract String getRegionName();
 
     public abstract void touched();
+    public abstract void unTouched();
 
     public Rectangle getBounds() {
         return bounds;

@@ -35,4 +35,8 @@ public class SoundButton extends GameButton {
         AudioUtils.getInstance().toggleSound();
     }
 
+    @Override
+    public void unTouched() {
+    }
+
 }

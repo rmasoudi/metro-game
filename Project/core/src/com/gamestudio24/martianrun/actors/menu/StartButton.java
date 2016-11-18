@@ -23,6 +23,10 @@ import com.gamestudio24.martianrun.utils.GameManager;
 
 public class StartButton extends GameButton {
 
+    @Override
+    public void unTouched() {
+    }
+
     public interface StartButtonListener {
         public void onStart();
     }

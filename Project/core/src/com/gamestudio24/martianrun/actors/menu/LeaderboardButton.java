@@ -23,6 +23,10 @@ import com.gamestudio24.martianrun.utils.GameManager;
 
 public class LeaderboardButton extends GameButton {
 
+    @Override
+    public void unTouched() {
+    }
+
     public interface LeaderboardButtonListener {
         public void onLeaderboard();
     }

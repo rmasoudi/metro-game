@@ -21,6 +21,10 @@ import com.gamestudio24.martianrun.utils.Constants;
 
 public class ShareButton extends GameButton {
 
+    @Override
+    public void unTouched() {
+    }
+
     public interface ShareButtonListener {
         public void onShare();
     }

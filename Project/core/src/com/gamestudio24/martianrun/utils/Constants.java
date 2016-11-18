@@ -26,7 +26,7 @@ public class Constants {
     public static final int APP_HEIGHT = 480;
     public static final float WORLD_TO_SCREEN = 32;
 
-    public static final Vector2 WORLD_GRAVITY = new Vector2(0, -10);
+    public static final Vector2 WORLD_GRAVITY = new Vector2(0, 0);
 
     public static final float GROUND_X = 0;
     public static final float GROUND_Y = 0;
@@ -65,7 +65,7 @@ public class Constants {
     public static final String FLYING_SMALL_ENEMY_ASSETS_ID = "flying_small_enemy";
     public static final String FLYING_WIDE_ENEMY_ASSETS_ID = "flying_wide_enemy";
 
-    public static final String BACKGROUND_IMAGE_PATH = "background.png";
+    public static final String BACKGROUND_IMAGE_PATH = "metro_background.png";
     public static final String GROUND_IMAGE_PATH = "ground.png";
     public static final String SPRITES_ATLAS_PATH = "sprites.txt";
     public static final String[] RUNNER_RUNNING_REGION_NAMES = new String[] {"alienBeige_run1", "alienBeige_run2"};

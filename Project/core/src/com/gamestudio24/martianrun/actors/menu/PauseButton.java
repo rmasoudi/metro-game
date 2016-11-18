@@ -23,6 +23,10 @@ import com.gamestudio24.martianrun.utils.GameManager;
 
 public class PauseButton extends GameButton {
 
+    @Override
+    public void unTouched() {
+    }
+
     public interface PauseButtonListener {
         public void onPause();
 

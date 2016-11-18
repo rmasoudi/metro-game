@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.gamestudio24.martianrun.stages;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
@@ -37,7 +37,6 @@ public class GameStage extends Stage implements ContactListener {
     private static final int VIEWPORT_HEIGHT = Constants.APP_HEIGHT;
 
     private World world;
-    private Ground ground;
     private Runner runner;
 
     private final float TIME_STEP = 1 / 300f;
@@ -45,12 +44,10 @@ public class GameStage extends Stage implements ContactListener {
 
     private OrthographicCamera camera;
 
-    private Rectangle screenLeftSide;
-    private Rectangle screenRightSide;
-
     private SoundButton soundButton;
     private MusicButton musicButton;
     private PauseButton pauseButton;
+    private MoveButton moveButton;
     private StartButton startButton;
     private AboutButton aboutButton;
     private ShareButton shareButton;
@@ -61,6 +58,7 @@ public class GameStage extends Stage implements ContactListener {
     private boolean tutorialShown;
 
     private Vector3 touchPoint;
+    private Background background;
 
     public GameStage() {
         super(new ScalingViewport(Scaling.stretch, VIEWPORT_WIDTH, VIEWPORT_HEIGHT,
@@ -69,9 +67,36 @@ public class GameStage extends Stage implements ContactListener {
         setUpStageBase();
         setUpMainMenu();
         setUpTouchControlAreas();
-        Gdx.input.setInputProcessor(this);
+        setListeners();
         AudioUtils.getInstance().init();
         onGameOver();
+    }
+
+    private void setListeners() {
+        InputMultiplexer multiplexer = new InputMultiplexer();
+        multiplexer.addProcessor(new SimpleDirectionGestureDetector(new SimpleDirectionGestureDetector.DirectionListener() {
+
+            @Override
+            public void onUp() {
+                runner.moveUp();
+            }
+
+            @Override
+            public void onRight() {
+            }
+
+            @Override
+            public void onLeft() {
+
+            }
+
+            @Override
+            public void onDown() {
+
+            }
+        }));
+        multiplexer.addProcessor(this);
+        Gdx.input.setInputProcessor(multiplexer);
     }
 
     private void setUpStageBase() {
@@ -89,8 +114,8 @@ public class GameStage extends Stage implements ContactListener {
      * These menu buttons are always displayed
      */
     private void setUpFixedMenu() {
-        setUpSound();
-        setUpMusic();
+//        setUpSound();
+//        setUpMusic();
         setUpScore();
     }
 
@@ -119,11 +144,19 @@ public class GameStage extends Stage implements ContactListener {
     }
 
     private void setUpPause() {
-        Rectangle pauseButtonBounds = new Rectangle(getCamera().viewportWidth / 64,
-                getCamera().viewportHeight * 1 / 2, getCamera().viewportHeight / 10,
+        Rectangle pauseButtonBounds = new Rectangle(getCamera().viewportWidth * 15 / 16,
+                getCamera().viewportHeight * 7 / 8, getCamera().viewportHeight / 10,
                 getCamera().viewportHeight / 10);
         pauseButton = new PauseButton(pauseButtonBounds, new GamePauseButtonListener());
         addActor(pauseButton);
+    }
+
+    private void setUpMoveButton() {
+        Rectangle moveButtonBounds = new Rectangle(getCamera().viewportWidth * 15 / 16,
+                getCamera().viewportHeight * 1 / 20, getCamera().viewportHeight / 10,
+                getCamera().viewportHeight / 10);
+        moveButton = new MoveButton(moveButtonBounds, new GameMoveButtonListener());
+        addActor(moveButton);
     }
 
     /**
@@ -137,7 +170,7 @@ public class GameStage extends Stage implements ContactListener {
     }
 
     private void setUpStart() {
-        Rectangle startButtonBounds = new Rectangle(getCamera().viewportWidth * 3/8,
+        Rectangle startButtonBounds = new Rectangle(getCamera().viewportWidth * 3 / 8,
                 getCamera().viewportHeight / 2, getCamera().viewportWidth / 4,
                 getCamera().viewportHeight / 8);
         startButton = new StartButton(startButtonBounds, new GameStartButtonListener());
@@ -173,22 +206,17 @@ public class GameStage extends Stage implements ContactListener {
         world = WorldUtils.createWorld();
         world.setContactListener(this);
         setUpBackground();
-        setUpGround();
     }
 
     private void setUpBackground() {
-        addActor(new Background());
-    }
-
-    private void setUpGround() {
-        ground = new Ground(WorldUtils.createGround(world));
-        addActor(ground);
+        background = new Background();
+        addActor(background);
     }
 
     private void setUpCharacters() {
         setUpRunner();
         setUpPauseLabel();
-        createEnemy();
+//        createEnemy();
     }
 
     private void setUpRunner() {
@@ -207,10 +235,6 @@ public class GameStage extends Stage implements ContactListener {
 
     private void setUpTouchControlAreas() {
         touchPoint = new Vector3();
-        screenLeftSide = new Rectangle(0, 0, getCamera().viewportWidth / 2,
-                getCamera().viewportHeight);
-        screenRightSide = new Rectangle(getCamera().viewportWidth / 2, 0,
-                getCamera().viewportWidth / 2, getCamera().viewportHeight);
     }
 
     private void setUpPauseLabel() {
@@ -250,7 +274,9 @@ public class GameStage extends Stage implements ContactListener {
     public void act(float delta) {
         super.act(delta);
 
-        if (GameManager.getInstance().getGameState() == GameState.PAUSED) return;
+        if (GameManager.getInstance().getGameState() == GameState.PAUSED) {
+            return;
+        }
 
         if (GameManager.getInstance().getGameState() == GameState.RUNNING) {
             totalTimePassed += delta;
@@ -273,13 +299,12 @@ public class GameStage extends Stage implements ContactListener {
         }
 
         //TODO: Implement interpolation
-
     }
 
     private void update(Body body) {
         if (!BodyUtils.bodyInBounds(body)) {
             if (BodyUtils.bodyIsEnemy(body) && !runner.isHit()) {
-                createEnemy();
+//                createEnemy();
             }
             world.destroyBody(body);
         }
@@ -306,14 +331,7 @@ public class GameStage extends Stage implements ContactListener {
         if (GameManager.getInstance().getGameState() != GameState.RUNNING) {
             return super.touchDown(x, y, pointer, button);
         }
-
-        if (rightSideTouched(touchPoint.x, touchPoint.y)) {
-            runner.jump();
-        } else if (leftSideTouched(touchPoint.x, touchPoint.y)) {
-            runner.dodge();
-        }
-
-        return super.touchDown(x, y, pointer, button);
+        return true;
     }
 
     @Override
@@ -322,11 +340,6 @@ public class GameStage extends Stage implements ContactListener {
         if (GameManager.getInstance().getGameState() != GameState.RUNNING) {
             return super.touchUp(screenX, screenY, pointer, button);
         }
-
-        if (runner.isDodging()) {
-            runner.stopDodge();
-        }
-
         return super.touchUp(screenX, screenY, pointer, button);
     }
 
@@ -344,16 +357,7 @@ public class GameStage extends Stage implements ContactListener {
                 break;
         }
 
-        return touched || soundButton.getBounds().contains(x, y)
-                || musicButton.getBounds().contains(x, y);
-    }
-
-    private boolean rightSideTouched(float x, float y) {
-        return screenRightSide.contains(x, y);
-    }
-
-    private boolean leftSideTouched(float x, float y) {
-        return screenLeftSide.contains(x, y);
+        return touched || moveButton.getBounds().contains(x, y);
     }
 
     /**
@@ -372,8 +376,8 @@ public class GameStage extends Stage implements ContactListener {
         Body a = contact.getFixtureA().getBody();
         Body b = contact.getFixtureB().getBody();
 
-        if ((BodyUtils.bodyIsRunner(a) && BodyUtils.bodyIsEnemy(b)) ||
-                (BodyUtils.bodyIsEnemy(a) && BodyUtils.bodyIsRunner(b))) {
+        if ((BodyUtils.bodyIsRunner(a) && BodyUtils.bodyIsEnemy(b))
+                || (BodyUtils.bodyIsEnemy(a) && BodyUtils.bodyIsRunner(b))) {
             if (runner.isHit()) {
                 return;
             }
@@ -383,8 +387,8 @@ public class GameStage extends Stage implements ContactListener {
             onGameOver();
             GameManager.getInstance().addGamePlayed();
             GameManager.getInstance().addJumpCount(runner.getJumpCount());
-        } else if ((BodyUtils.bodyIsRunner(a) && BodyUtils.bodyIsGround(b)) ||
-                (BodyUtils.bodyIsGround(a) && BodyUtils.bodyIsRunner(b))) {
+        } else if ((BodyUtils.bodyIsRunner(a) && BodyUtils.bodyIsGround(b))
+                || (BodyUtils.bodyIsGround(a) && BodyUtils.bodyIsRunner(b))) {
             runner.landed();
         }
 
@@ -445,6 +449,21 @@ public class GameStage extends Stage implements ContactListener {
 
     }
 
+    private class GameMoveButtonListener implements MoveButton.MoveButtonListener {
+
+        @Override
+        public void onMove() {
+            background.setMoving(true);
+            runner.setRunning(true);
+        }
+
+        @Override
+        public void onStop() {
+            background.setMoving(false);
+            runner.setRunning(false);
+        }
+    }
+
     private class GameStartButtonListener implements StartButton.StartButtonListener {
 
         @Override
@@ -453,6 +472,7 @@ public class GameStage extends Stage implements ContactListener {
             setUpStageBase();
             setUpCharacters();
             setUpPause();
+            setUpMoveButton();
             setUpTutorial();
             onGameResumed();
         }
@@ -525,5 +545,4 @@ public class GameStage extends Stage implements ContactListener {
         setUpAboutText();
         setUpAbout();
     }
-
 }

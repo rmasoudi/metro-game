@@ -20,33 +20,46 @@ import com.gamestudio24.martianrun.enums.GameState;
 import com.gamestudio24.martianrun.utils.Constants;
 import com.gamestudio24.martianrun.utils.GameManager;
 
-public class AboutButton extends GameButton {
+public class MoveButton extends GameButton {
 
-    @Override
-    public void unTouched() {
+    public interface MoveButtonListener {
+
+        public void onMove();
+
+        public void onStop();
     }
 
-    public interface AboutButtonListener {
+    private MoveButtonListener listener;
 
-        public void onAbout();
-    }
-
-    private AboutButtonListener listener;
-
-    public AboutButton(Rectangle bounds, AboutButtonListener listener) {
+    public MoveButton(Rectangle bounds, MoveButtonListener listener) {
         super(bounds);
         this.listener = listener;
     }
 
     @Override
     protected String getRegionName() {
-        return GameManager.getInstance().getGameState() == GameState.ABOUT ? Constants.CLOSE_REGION_NAME
-                : Constants.ABOUT_REGION_NAME;
+        return Constants.PLAY_REGION_NAME;
+    }
+
+    @Override
+    public void act(float delta) {
+        super.act(delta);
+        if (GameManager.getInstance().getGameState() == GameState.OVER) {
+            remove();
+        }
     }
 
     @Override
     public void touched() {
-        listener.onAbout();
+        if (GameManager.getInstance().getGameState() == GameState.RUNNING) {
+            listener.onMove();
+        }
     }
 
+    @Override
+    public void unTouched() {
+        if (GameManager.getInstance().getGameState() == GameState.RUNNING) {
+            listener.onStop();
+        }
+    }
 }
