@@ -30,13 +30,13 @@ public class Constants {
     public static final float GROUND_X = 0;
     public static final float GROUND_Y = 0;
     public static final float GROUND_WIDTH = 25f;
-    public static final float GROUND_HEIGHT = 3f;
+    public static final float GROUND_HEIGHT = 4f;
     public static final float GROUND_DENSITY = 0f;
 
     public static final float RUNNER_X = 2;
     public static final float RUNNER_Y = GROUND_Y + GROUND_HEIGHT;
-    public static final float RUNNER_WIDTH = 1f;
-    public static final float RUNNER_HEIGHT = 2f;
+    public static final float RUNNER_WIDTH = 2.5f;
+    public static final float RUNNER_HEIGHT = 5f;
     public static final float RUNNER_GRAVITY_SCALE = 3f;
     public static final float RUNNER_DENSITY = 0.5f;
     public static final float RUNNER_DODGE_X = 2f;
@@ -66,13 +66,12 @@ public class Constants {
     public static final String MOVE_BUTTUN_ASSET_ID = "move";
     public static final String JAR_ZANI_BUTTUN_ASSET_ID = "jar_zani";
     public static final String MOKH_ZANI_BUTTUN_ASSET_ID = "mokh_zani";
-    
 
     public static final String BACKGROUND_IMAGE_PATH = "metro_background.png";
     public static final String GROUND_IMAGE_PATH = "ground.png";
     public static final String SPRITES_ATLAS_PATH = "sprites.txt";
     public static final String CUSTOM_ATLAS_PATH = "atlas.atlas";
-    public static final String[] RUNNER_RUNNING_REGION_NAMES = new String[]{"alienBeige_run1", "alienBeige_run2"};
+
     public static final String RUNNER_DODGING_REGION_NAME = "alienBeige_dodge";
     public static final String RUNNER_HIT_REGION_NAME = "alienBeige_hit";
     public static final String RUNNER_JUMPING_REGION_NAME = "alienBeige_jump";
@@ -90,7 +89,7 @@ public class Constants {
     public static final String MUSIC_OFF_REGION_NAME = "music_off";
     public static final String PAUSE_REGION_NAME = "pause";
     public static final String PLAY_REGION_NAME = "play";
-    public static final String BIG_PLAY_REGION_NAME = "play_big";
+    public static final String BIG_PLAY_REGION_NAME = "start_button";
     public static final String LEADERBOARD_REGION_NAME = "leaderboard";
     public static final String ABOUT_REGION_NAME = "about";
     public static final String CLOSE_REGION_NAME = "close";
@@ -101,6 +100,8 @@ public class Constants {
     public static final String TUTORIAL_RIGHT_REGION_NAME = "tutorial_right";
     public static final String TUTORIAL_LEFT_TEXT = "\nTap left to dodge";
     public static final String TUTORIAL_RIGHT_TEXT = "\nTap right to jump";
+
+    public static final String TRANSPARENT_ASSET_ID = "transparent";
 
     public static final String RUNNER_JUMPING_SOUND = "jump.wav";
     public static final String RUNNER_HIT_SOUND = "hit.wav";
@@ -114,4 +115,13 @@ public class Constants {
     public static final String SHARE_TITLE = "Share!";
     public static final String PAUSED_LABEL = "Paused";
 
+    public static final String DAST_FOROOSH_ATLAS_PATH = "dastforoosh.atlas";
+    public static String[] DASTFOROOSH_RUNNING_REGION_NAMES;
+
+    static {
+        DASTFOROOSH_RUNNING_REGION_NAMES = new String[24];
+        for (int i = 0; i < 24; i++) {
+            DASTFOROOSH_RUNNING_REGION_NAMES[i] = "dastforoosh" + i;
+        }
+    }
 }

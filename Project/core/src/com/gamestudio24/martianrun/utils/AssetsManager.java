@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.gamestudio24.martianrun.utils;
 
 import com.badlogic.gdx.Gdx;
@@ -32,6 +31,7 @@ public class AssetsManager {
     private static HashMap<String, Animation> animationsMap = new HashMap<String, Animation>();
     private static TextureAtlas textureAtlas;
     private static TextureAtlas customAtlas;
+    private static TextureAtlas dastForooshAtlas;
     private static BitmapFont smallFont;
     private static BitmapFont smallestFont;
     private static BitmapFont largeFont;
@@ -66,7 +66,8 @@ public class AssetsManager {
 
         textureAtlas = new TextureAtlas(Constants.SPRITES_ATLAS_PATH);
         setCustomAtlas(new TextureAtlas(Constants.CUSTOM_ATLAS_PATH));
-        
+        dastForooshAtlas=new TextureAtlas(Constants.DAST_FOROOSH_ATLAS_PATH);
+
         // Runner
         texturesMap.put(Constants.RUNNER_JUMPING_ASSETS_ID,
                 textureAtlas.findRegion(Constants.RUNNER_JUMPING_REGION_NAME));
@@ -74,8 +75,8 @@ public class AssetsManager {
                 textureAtlas.findRegion(Constants.RUNNER_DODGING_REGION_NAME));
         texturesMap.put(Constants.RUNNER_HIT_ASSETS_ID,
                 textureAtlas.findRegion(Constants.RUNNER_HIT_REGION_NAME));
-        animationsMap.put(Constants.RUNNER_RUNNING_ASSETS_ID, createAnimation(textureAtlas,
-                Constants.RUNNER_RUNNING_REGION_NAMES));
+        animationsMap.put(Constants.RUNNER_RUNNING_ASSETS_ID, createAnimation(dastForooshAtlas,
+                Constants.DASTFOROOSH_RUNNING_REGION_NAMES));
 
         // Enemies
         animationsMap.put(Constants.RUNNING_SMALL_ENEMY_ASSETS_ID, createAnimation(textureAtlas,
@@ -96,6 +97,8 @@ public class AssetsManager {
                 textureAtlas.findRegion(Constants.TUTORIAL_LEFT_REGION_NAME));
         texturesMap.put(Constants.TUTORIAL_RIGHT_REGION_NAME,
                 textureAtlas.findRegion(Constants.TUTORIAL_RIGHT_REGION_NAME));
+        texturesMap.put(Constants.TRANSPARENT_ASSET_ID,
+                customAtlas.findRegion(Constants.TRANSPARENT_ASSET_ID));
 
         // Fonts
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal(Constants.FONT_NAME));

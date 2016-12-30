@@ -181,10 +181,11 @@ public class GameStage extends Stage implements ContactListener {
      * These menu buttons are only displayed when the game is over
      */
     private void setUpMainMenu() {
+        setUpTransparent();
         setUpStart();
-        setUpAbout();
-        setUpShare();
-        setUpAchievements();
+//        setUpAbout();
+//        setUpShare();
+//        setUpAchievements();
     }
 
     private void setUpStart() {
@@ -261,7 +262,14 @@ public class GameStage extends Stage implements ContactListener {
         addActor(new PausedLabel(pauseLabelBounds));
     }
 
+    private void setUpTransparent() {
+        Rectangle bounds = new Rectangle(getCamera().viewportWidth / 8, getCamera().viewportHeight / 8, getCamera().viewportWidth * 6 / 8,
+                getCamera().viewportHeight * 6 / 8);
+        addActor(new Transparent(bounds, Constants.TRANSPARENT_ASSET_ID));
+    }
+
     private void setUpTutorial() {
+        tutorialShown = true;
         if (tutorialShown) {
             return;
         }

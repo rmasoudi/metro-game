@@ -1,6 +1,6 @@
 
 atlas.png
-size: 512,64
+size: 512,256
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -13,15 +13,29 @@ jar_zani
   index: -1
 mokh_zani
   rotate: false
-  xy: 124, 2
+  xy: 304, 204
   size: 120, 40
   orig: 120, 40
   offset: 0, 0
   index: -1
 move
   rotate: false
-  xy: 246, 2
+  xy: 124, 2
   size: 120, 40
   orig: 120, 40
+  offset: 0, 0
+  index: -1
+start_button
+  rotate: false
+  xy: 304, 162
+  size: 120, 40
+  orig: 120, 40
+  offset: 0, 0
+  index: -1
+transparent
+  rotate: false
+  xy: 2, 44
+  size: 300, 200
+  orig: 300, 200
   offset: 0, 0
   index: -1
