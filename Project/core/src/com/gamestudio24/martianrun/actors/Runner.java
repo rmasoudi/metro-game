@@ -20,7 +20,6 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.gamestudio24.martianrun.box2d.RunnerUserData;
 import com.gamestudio24.martianrun.enums.Difficulty;
@@ -61,6 +60,7 @@ public class Runner extends GameActor {
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
+        toFront();
         super.draw(batch, parentAlpha);
 
         float x = screenRectangle.x - (screenRectangle.width * 0.1f);

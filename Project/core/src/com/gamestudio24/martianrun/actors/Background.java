@@ -17,9 +17,11 @@ package com.gamestudio24.martianrun.actors;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.gamestudio24.martianrun.enums.GameState;
+import com.gamestudio24.martianrun.listeners.BackgroundMoveListener;
 import com.gamestudio24.martianrun.utils.AssetsManager;
 import com.gamestudio24.martianrun.utils.Constants;
 import com.gamestudio24.martianrun.utils.GameManager;
@@ -31,11 +33,15 @@ public class Background extends Actor {
     private Rectangle textureRegionBounds2;
     private int speed = 100;
     private boolean moving = false;
+    private ShapeRenderer shapeRenderer;
+    private BackgroundMoveListener backgroundMoveListener;
 
-    public Background() {
+    public Background(BackgroundMoveListener backgroundMoveListener) {
+        this.backgroundMoveListener = backgroundMoveListener;
         textureRegion = AssetsManager.getTextureRegion(Constants.BACKGROUND_ASSETS_ID);
         textureRegionBounds1 = new Rectangle(0 - Constants.APP_WIDTH / 2, 0, Constants.APP_WIDTH, Constants.APP_HEIGHT);
         textureRegionBounds2 = new Rectangle(Constants.APP_WIDTH / 2, 0, Constants.APP_WIDTH, Constants.APP_HEIGHT);
+        shapeRenderer = new ShapeRenderer();
     }
 
     @Override
@@ -47,7 +53,7 @@ public class Background extends Actor {
         if (!isMoving()) {
             return;
         }
-
+        backgroundMoveListener.onMove(true);
         if (leftBoundsReached(delta)) {
             resetBounds();
         } else {
@@ -76,6 +82,7 @@ public class Background extends Actor {
     private void resetBounds() {
         textureRegionBounds1 = textureRegionBounds2;
         textureRegionBounds2 = new Rectangle(Constants.APP_WIDTH, 0, Constants.APP_WIDTH, Constants.APP_HEIGHT);
+        backgroundMoveListener.onReset();
     }
 
     /**

@@ -13,12 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.gamestudio24.martianrun.actors;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.gamestudio24.martianrun.box2d.EnemyUserData;
 import com.gamestudio24.martianrun.enums.GameState;
@@ -29,6 +29,8 @@ public class Enemy extends GameActor {
 
     private Animation animation;
     private float stateTime;
+    private boolean isMoving = false;
+    private int speed = 100;
 
     public Enemy(Body body) {
         super(body);
@@ -44,7 +46,17 @@ public class Enemy extends GameActor {
     @Override
     public void act(float delta) {
         super.act(delta);
-        body.setLinearVelocity(getUserData().getLinearVelocity());
+        if (GameManager.getInstance().getGameState() != GameState.RUNNING) {
+            return;
+        }
+        if (isMoving) {
+            body.setLinearVelocity(getUserData().getLinearVelocity());
+//            screenRectangle.x -= delta * speed;
+        }
+        else{
+                body.setLinearVelocity(new Vector2(0, 0));
+        }
+//        body.setLinearVelocity(getUserData().getLinearVelocity());
     }
 
     @Override
@@ -58,4 +70,9 @@ public class Enemy extends GameActor {
         batch.draw(animation.getKeyFrame(stateTime, true), (screenRectangle.x - (screenRectangle.width * 0.1f)),
                 screenRectangle.y, screenRectangle.width * 1.2f, screenRectangle.height * 1.1f);
     }
+
+    public void setMoving(boolean moving) {
+        isMoving = moving;
+    }
+
 }

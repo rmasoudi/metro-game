@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.gamestudio24.martianrun.utils;
 
 import com.gamestudio24.martianrun.enums.EnemyType;
@@ -48,6 +47,14 @@ public class RandomUtils {
         public E random() {
             return values[RND.nextInt(values.length)];
         }
+    }
+
+    public static boolean canCrate(float creationProbability) {
+        int number = RandomEnum.RND.nextInt(100);
+        if (number <= 100 * creationProbability) {
+            return true;
+        }
+        return false;
     }
 
 }

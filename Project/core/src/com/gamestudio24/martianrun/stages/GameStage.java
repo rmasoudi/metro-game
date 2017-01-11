@@ -21,6 +21,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Scaling;
@@ -29,6 +30,7 @@ import com.gamestudio24.martianrun.actors.*;
 import com.gamestudio24.martianrun.actors.menu.*;
 import com.gamestudio24.martianrun.enums.Difficulty;
 import com.gamestudio24.martianrun.enums.GameState;
+import com.gamestudio24.martianrun.listeners.BackgroundMoveListener;
 import com.gamestudio24.martianrun.utils.*;
 
 public class GameStage extends Stage implements ContactListener {
@@ -61,6 +63,8 @@ public class GameStage extends Stage implements ContactListener {
 
     private Vector3 touchPoint;
     private Background background;
+    private BackgroundMoveListener backgroundMoveListener;
+    private float humanProbability = .7f;
 
     public GameStage() {
         super(new ScalingViewport(Scaling.stretch, VIEWPORT_WIDTH, VIEWPORT_HEIGHT,
@@ -228,14 +232,14 @@ public class GameStage extends Stage implements ContactListener {
     }
 
     private void setUpBackground() {
-        background = new Background();
+        setBackgroundListeners();
+        background = new Background(backgroundMoveListener);
         addActor(background);
     }
 
     private void setUpCharacters() {
         setUpRunner();
         setUpPauseLabel();
-//        createEnemy();
     }
 
     private void setUpRunner() {
@@ -309,13 +313,6 @@ public class GameStage extends Stage implements ContactListener {
             updateDifficulty();
         }
 
-        Array<Body> bodies = new Array<Body>(world.getBodyCount());
-        world.getBodies(bodies);
-
-        for (Body body : bodies) {
-            update(body);
-        }
-
         // Fixed timestep
         accumulator += delta;
 
@@ -337,10 +334,10 @@ public class GameStage extends Stage implements ContactListener {
     }
 
     private void createEnemy() {
-        Enemy enemy = new Enemy(WorldUtils.createEnemy(world));
-        enemy.getUserData().setLinearVelocity(
-                GameManager.getInstance().getDifficulty().getEnemyLinearVelocity());
-        addActor(enemy);
+//        Enemy enemy = new Enemy(WorldUtils.createEnemy(world));
+//        enemy.getUserData().setLinearVelocity(
+//                GameManager.getInstance().getDifficulty().getEnemyLinearVelocity());
+//        addActor(enemy);
     }
 
     @Override
@@ -404,18 +401,18 @@ public class GameStage extends Stage implements ContactListener {
 
         if ((BodyUtils.bodyIsRunner(a) && BodyUtils.bodyIsEnemy(b))
                 || (BodyUtils.bodyIsEnemy(a) && BodyUtils.bodyIsRunner(b))) {
-            if (runner.isHit()) {
-                return;
-            }
-            runner.hit();
-            displayAd();
-            GameManager.getInstance().submitScore(score.getScore());
-            onGameOver();
-            GameManager.getInstance().addGamePlayed();
-            GameManager.getInstance().addJumpCount(runner.getJumpCount());
+//            if (runner.isHit()) {
+//                return;
+//            }
+//            runner.hit();
+//            displayAd();
+//            GameManager.getInstance().submitScore(score.getScore());
+//            onGameOver();
+//            GameManager.getInstance().addGamePlayed();
+//            GameManager.getInstance().addJumpCount(runner.getJumpCount());
         } else if ((BodyUtils.bodyIsRunner(a) && BodyUtils.bodyIsGround(b))
                 || (BodyUtils.bodyIsGround(a) && BodyUtils.bodyIsRunner(b))) {
-            runner.landed();
+//            runner.landed();
         }
 
     }
@@ -481,12 +478,14 @@ public class GameStage extends Stage implements ContactListener {
         public void onMove() {
             background.setMoving(true);
             runner.setRunning(true);
+            moveAllEnemies(true);
         }
 
         @Override
         public void onStop() {
             background.setMoving(false);
             runner.setRunning(false);
+            moveAllEnemies(false);
         }
     }
 
@@ -594,5 +593,40 @@ public class GameStage extends Stage implements ContactListener {
         setUpStageBase();
         setUpAboutText();
         setUpAbout();
+    }
+
+    private void moveAllEnemies(boolean move) {
+        Array<Actor> actors = getActors();
+        for (Actor actor : actors) {
+            if (actor instanceof Human) {
+                Human human = (Human) actor;
+                human.setMoving(move);
+            }
+        }
+    }
+
+    private void createHumans() {
+        for (int i = 0; i < 5; i++) {
+//            if (RandomUtils.canCrate(humanProbability)) 
+            {
+                Human human = new Human(i);
+                addActor(human);
+            }
+        }
+    }
+
+    private void setBackgroundListeners() {
+        createHumans();
+        backgroundMoveListener = new BackgroundMoveListener() {
+
+            @Override
+            public void onReset() {
+                createHumans();
+            }
+            @Override
+            public void onMove(boolean move) {
+                moveAllEnemies(move);
+            }
+        };
     }
 }
