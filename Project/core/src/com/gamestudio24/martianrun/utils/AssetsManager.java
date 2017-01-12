@@ -124,7 +124,7 @@ public class AssetsManager {
         return animationsMap.get(key);
     }
 
-    private static Animation createAnimation(TextureAtlas textureAtlas, String[] regionNames) {
+    public static Animation createAnimation(TextureAtlas textureAtlas, String[] regionNames) {
 
         TextureRegion[] runningFrames = new TextureRegion[regionNames.length];
 

@@ -609,7 +609,8 @@ public class GameStage extends Stage implements ContactListener {
         for (int i = 0; i < 5; i++) {
 //            if (RandomUtils.canCrate(humanProbability)) 
             {
-                Human human = new Human(i);
+                Gholi human = new Gholi(i);
+                human.init();
                 addActor(human);
             }
         }

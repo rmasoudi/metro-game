@@ -31,7 +31,7 @@ public class Background extends Actor {
     private final TextureRegion textureRegion;
     private Rectangle textureRegionBounds1;
     private Rectangle textureRegionBounds2;
-    private int speed = 100;
+    public static final int BACKGROUND_SPEED = 100;
     private boolean moving = false;
     private ShapeRenderer shapeRenderer;
     private BackgroundMoveListener backgroundMoveListener;
@@ -71,12 +71,12 @@ public class Background extends Actor {
     }
 
     private boolean leftBoundsReached(float delta) {
-        return (textureRegionBounds2.x - (delta * speed)) <= 0;
+        return (textureRegionBounds2.x - (delta * BACKGROUND_SPEED)) <= 0;
     }
 
     private void updateXBounds(float delta) {
-        textureRegionBounds1.x += delta * speed;
-        textureRegionBounds2.x += delta * speed;
+        textureRegionBounds1.x += delta * BACKGROUND_SPEED;
+        textureRegionBounds2.x += delta * BACKGROUND_SPEED;
     }
 
     private void resetBounds() {

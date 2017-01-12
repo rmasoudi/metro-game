@@ -5,13 +5,12 @@
  */
 package com.gamestudio24.martianrun.actors;
 
-import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.gamestudio24.martianrun.enums.GameState;
-import com.gamestudio24.martianrun.utils.AssetsManager;
 import com.gamestudio24.martianrun.utils.Constants;
 import com.gamestudio24.martianrun.utils.GameManager;
 
@@ -19,18 +18,21 @@ import com.gamestudio24.martianrun.utils.GameManager;
  *
  * @author m
  */
-public class Human extends Actor {
+public abstract class Human extends Actor {
 
-    private int speed = 100;
+    private static final float HUMAN_WIDTH = Constants.APP_WIDTH / 8;
     private boolean moving = false;
     private ShapeRenderer shapeRenderer;
     private int humanIndex = 0;
-
-    private static final float HUMAN_WIDTH = Constants.APP_WIDTH / 8;
-    private static final float HUMAN_HEIGHT = Constants.APP_HEIGHT / 14;
-
     private float humanX;
-    private static final float humanY = Constants.APP_HEIGHT / 3;
+    private float stateTime=0f;
+
+    protected float humanHeight;
+    protected TextureRegion constantTexture;
+    protected Animation idleAnimation;
+    protected Animation talkingAnimation;
+
+    protected float humanY;
 
     public Human(int index) {
         this.humanIndex = index;
@@ -41,6 +43,8 @@ public class Human extends Actor {
         }
         shapeRenderer = new ShapeRenderer();
     }
+
+    public abstract void init();
 
     @Override
     public void act(float delta) {
@@ -61,19 +65,7 @@ public class Human extends Actor {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
-        batch.end();
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        if(humanIndex==4){
-            shapeRenderer.setColor(Color.YELLOW);
-        }
-        else if (humanIndex % 2 == 0) {
-            shapeRenderer.setColor(Color.BLUE);
-        } else {
-            shapeRenderer.setColor(Color.YELLOW);
-        }
-        shapeRenderer.rect(humanX, humanY, HUMAN_WIDTH, HUMAN_HEIGHT);
-        shapeRenderer.end();
-        batch.begin();
+        batch.draw(constantTexture, humanX, humanY, HUMAN_WIDTH, humanHeight);
 
     }
 
@@ -92,10 +84,10 @@ public class Human extends Actor {
     }
 
     private boolean leftBoundsReached(float delta) {
-        return (humanX - (delta * speed)) <= -HUMAN_WIDTH;
+        return (humanX - (delta * Background.BACKGROUND_SPEED)) <= -HUMAN_WIDTH;
     }
 
     private void updateXBounds(float delta) {
-        humanX += delta * speed;
+        humanX += delta * Background.BACKGROUND_SPEED;
     }
 }
